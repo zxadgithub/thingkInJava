@@ -1,5 +1,7 @@
 package zxa.io.dir;
 
+
+//page526
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
@@ -12,16 +14,17 @@ public class DirList {
 		Scanner scanner = new Scanner(System.in);
 		
 		String file = scanner.next();
-		File path = new File("/usr/local/apache-tomcat-8.0.27/lib/");
+		File path = new File(file);
 		String[] list;
-//		System.out.println("输入搜索文件名");
-//		String pa = scanner.next();
-//		if(pa.length() == 0){
+		System.out.println("输入正则表达式搜索");
+		String pa = scanner.next();
+		if(pa.length() == 0){
 			list = path.list();
-//		}else{
-//			list = path.list(new DirFilter(pa));
-//		}
-//		list = path.list(new DirFilter("ca"));
+		}else{
+			//实现文件匹配规则
+			list = path.list(new DirFilter(pa));
+		}
+		//list排序以及排序规则
 		Arrays.sort(list,String.CASE_INSENSITIVE_ORDER);
 		for(String dirItem:list){
 			System.out.println(dirItem);
@@ -40,7 +43,6 @@ class DirFilter implements FilenameFilter{
 	}
 	@Override
 	public boolean accept(File arg0, String arg1) {
-		// TODO Auto-generated method stub
 		return pattern.matcher(arg1).matches();
 	}
 	
