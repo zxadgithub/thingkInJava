@@ -6,22 +6,10 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class DirList2 {
+public class DirList3 {
 	
 	
-	public static FilenameFilter filter(final String regex){
-		//匿名内部类实现
-		return new FilenameFilter(){
-			
-			Pattern pattern = Pattern.compile(regex);
-			
-			@Override
-			public boolean accept(File dir, String name) {
-				return pattern.matcher(name).matches();
-			}
-			
-		};
-	}
+
 	
 	public static void main(String[] args) {
 		System.out.println("输入文件目录");
@@ -36,7 +24,16 @@ public class DirList2 {
 			list = path.list();
 		}else{
 			//实现文件匹配规则
-			list = path.list(filter(pa));
+			list = path.list(new FilenameFilter(){
+				
+				Pattern pattern = Pattern.compile(pa);
+				
+				@Override
+				public boolean accept(File dir, String name) {
+					return pattern.matcher(name).matches();
+				}
+				
+			});
 		}
 		//list排序以及排序规则
 		Arrays.sort(list,String.CASE_INSENSITIVE_ORDER);
